@@ -3,223 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Físico-Mecânica | Força, Energia e Potência</title>
-    <style>
-        :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-            --text-color: #c9d1d9;
-            --accent-color: #238636;
-            --accent-hover: #2ea043;
-            --input-bg: #0d1117;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            width: 100%;
-            max-width: 450px;
-            padding: 24px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-        }
-
-        h1 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-            color: #58a6ff;
-            text-align: center;
-        }
-
-        p.subtitle {
-            font-size: 0.85rem;
-            color: #8b949e;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            color: #c9d1d9;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px 12px;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-color);
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input:focus {
-            border-color: #58a6ff;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--accent-color);
-            color: #ffffff;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: var(--accent-hover);
-        }
-
-        .results {
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 0.95rem;
-            border-bottom: 1px dashed var(--border-color);
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-        }
-
-        .result-value {
-            font-weight: 600;
-            color: #3fb950;
-        }
-
-        .error-message {
-            color: #f85149;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            display: none;
-            text-align: center;
-        }
-    </style>
+    <title>Calculadora Físico-Mecânica</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Calculadora Físico-Mecânica</h1>
-        <p class="subtitle">Movimento retilíneo partindo do repouso ($v_0 = 0$)</p>
+    <button id="btnFullscreen" class="btn-fullscreen">📌 Tela Inteira</button>
+
+    <main class="container">
+        <header>
+            <h1>Calculadora Físico-Mecânica</h1>
+            <p class="subtitle">Movimento retilíneo partindo do repouso ($v_0 = 0$)</p>
+        </header>
 
         <form id="physicsForm">
-            <div class="form-group">
-                <label for="massa">Massa (kg):</label>
-                <input type="number" id="massa" step="any" placeholder="Ex: 10" required>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="massa">Massa (kg):</label>
+                    <input type="number" id="massa" step="any" placeholder="Ex: 10" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="distancia">Distância (m):</label>
+                    <input type="number" id="distancia" step="any" placeholder="Ex: 50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tempo">Tempo (s):</label>
+                    <input type="number" id="tempo" step="any" placeholder="Ex: 5" required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="distancia">Distância (m):</label>
-                <input type="number" id="distancia" step="any" placeholder="Ex: 50" required>
-            </div>
-
-            <div class="form-group">
-                <label for="tempo">Tempo (s):</label>
-                <input type="number" id="tempo" step="any" placeholder="Ex: 5" required>
-            </div>
-
-            <button type="button" onclick="calcular()">Calcular</button>
+            <button type="button" id="btnCalcular" class="btn-primary">Calcular</button>
         </form>
 
         <div class="error-message" id="errorMessage"></div>
 
-        <div class="results" id="resultsSection" style="display: none;">
-            <div class="result-item">
-                <span>Aceleração ($a$):</span>
-                <span class="result-value" id="resAceleracao">-</span>
+        <section class="results" id="resultsSection">
+            <h2>Resultados</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <span class="result-label">Aceleração ($a$)</span>
+                    <span class="result-value" id="resAceleracao">-</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-label">Força ($F$)</span>
+                    <span class="result-value" id="resForca">-</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-label">Energia ($E$)</span>
+                    <span class="result-value" id="resEnergia">-</span>
+                </div>
+                <div class="result-card">
+                    <span class="result-label">Potência ($P$)</span>
+                    <span class="result-value" id="resPotencia">-</span>
+                </div>
             </div>
-            <div class="result-item">
-                <span>Força ($F$):</span>
-                <span class="result-value" id="resForca">-</span>
-            </div>
-            <div class="result-item">
-                <span>Energia ($E$):</span>
-                <span class="result-value" id="resEnergia">-</span>
-            </div>
-            <div class="result-item">
-                <span>Potência ($P$):</span>
-                <span class="result-value" id="resPotencia">-</span>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <script>
-        function calcular() {
-            const massa = parseFloat(document.getElementById('massa').value);
-            const distancia = parseFloat(document.getElementById('distancia').value);
-            const tempo = parseFloat(document.getElementById('tempo').value);
-            const errorDiv = document.getElementById('errorMessage');
-            const resultsSection = document.getElementById('resultsSection');
-
-            // Validação de entrada
-            if (isNaN(massa) || isNaN(distancia) || isNaN(tempo)) {
-                errorDiv.textContent = "Por favor, preencha todos os campos corretamente.";
-                errorDiv.style.display = "block";
-                resultsSection.style.display = "none";
-                return;
-            }
-
-            if (tempo <= 0) {
-                errorDiv.textContent = "O tempo deve ser maior que zero (t > 0).";
-                errorDiv.style.display = "block";
-                resultsSection.style.display = "none";
-                return;
-            }
-
-            errorDiv.style.display = "none";
-
-            // Fórmulas físicas (considerando a partir do repouso, v0 = 0)
-            // d = (1/2) * a * t^2  =>  a = (2 * d) / (t^2)
-            const aceleracao = (2 * distancia) / Math.pow(tempo, 2);
-            const forca = massa * aceleracao;
-            const energia = forca * distancia;
-            const potencia = energia / tempo;
-
-            // Exibir resultados formatados
-            document.getElementById('resAceleracao').textContent = aceleracao.toFixed(2) + " m/s²";
-            document.getElementById('resForca').textContent = forca.toFixed(2) + " N";
-            document.getElementById('resEnergia').textContent = energia.toFixed(2) + " J";
-            document.getElementById('resPotencia').textContent = potencia.toFixed(2) + " W";
-
-            resultsSection.style.display = "block";
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
