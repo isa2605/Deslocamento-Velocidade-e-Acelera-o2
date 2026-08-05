@@ -3,64 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Físico-Mecânica</title>
+    <title>Física Lab | Força, Energia e Potência</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <button id="btnFullscreen" class="btn-fullscreen">📌 Tela Inteira</button>
+    <header class="navbar">
+        <div class="logo">
+            <svg height="32" viewBox="0 0 16 16" width="32" fill="currentColor">
+                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8z"></path>
+            </svg>
+            <span>PhysicsLab / <strong>Calculadora-Fisica</strong></span>
+        </div>
+    </header>
 
     <main class="container">
-        <header>
-            <h1>Calculadora Físico-Mecânica</h1>
-            <p class="subtitle">Movimento retilíneo partindo do repouso ($v_0 = 0$)</p>
-        </header>
+        <section class="hero">
+            <h1>Simulador de Força, Energia e Potência</h1>
+            <p>Insira os dados do movimento retilíneo uniformemente variado (saindo do repouso) para calcular as grandezas físicas.</p>
+        </section>
 
-        <form id="physicsForm">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="massa">Massa (kg):</label>
-                    <input type="number" id="massa" step="any" placeholder="Ex: 10" required>
-                </div>
+        <div class="content-grid">
+            <section class="card input-card">
+                <h2>Parâmetros de Entrada</h2>
+                <form id="calc-form">
+                    <div class="input-group">
+                        <label for="massa">Massa ($m$)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="massa" step="any" placeholder="Ex: 10" required>
+                            <span class="unit">kg</span>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="distancia">Distância (m):</label>
-                    <input type="number" id="distancia" step="any" placeholder="Ex: 50" required>
-                </div>
+                    <div class="input-group">
+                        <label for="distancia">Distância ($d$)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="distancia" step="any" placeholder="Ex: 50" required>
+                            <span class="unit">m</span>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="tempo">Tempo (s):</label>
-                    <input type="number" id="tempo" step="any" placeholder="Ex: 5" required>
-                </div>
-            </div>
+                    <div class="input-group">
+                        <label for="tempo">Tempo ($t$)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="tempo" step="any" placeholder="Ex: 5" required>
+                            <span class="unit">s</span>
+                        </div>
+                    </div>
 
-            <button type="button" id="btnCalcular" class="btn-primary">Calcular</button>
-        </form>
+                    <button type="submit" id="btn-calcular">Calcular Resultados</button>
+                </form>
+            </section>
 
-        <div class="error-message" id="errorMessage"></div>
+            <section class="card results-card">
+                <h2>Resultados Obtidos</h2>
+                <div class="results-grid">
+                    <div class="res-item">
+                        <span class="res-label">Aceleração</span>
+                        <span class="res-value" id="res-acel">0.00 <small>m/s²</small></span>
+                    </div>
+                    <div class="res-item">
+                        <span class="res-label">Força Resultante</span>
+                        <span class="res-value" id="res-forca">0.00 <small>N</small></span>
+                    </div>
+                    <div class="res-item">
+                        <span class="res-label">Energia / Trabalho</span>
+                        <span class="res-value" id="res-energia">0.00 <small>J</small></span>
+                    </div>
+                    <div class="res-item">
+                        <span class="res-label">Potência Média</span>
+                        <span class="res-value" id="res-potencia">0.00 <small>W</small></span>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-        <section class="results" id="resultsSection">
-            <h2>Resultados</h2>
-            <div class="results-grid">
-                <div class="result-card">
-                    <span class="result-label">Aceleração ($a$)</span>
-                    <span class="result-value" id="resAceleracao">-</span>
-                </div>
-                <div class="result-card">
-                    <span class="result-label">Força ($F$)</span>
-                    <span class="result-value" id="resForca">-</span>
-                </div>
-                <div class="result-card">
-                    <span class="result-label">Energia ($E$)</span>
-                    <span class="result-value" id="resEnergia">-</span>
-                </div>
-                <div class="result-card">
-                    <span class="result-label">Potência ($P$)</span>
-                    <span class="result-value" id="resPotencia">-</span>
-                </div>
+        <section class="card chart-card">
+            <h2>Comportamento da Energia e Potência no Tempo</h2>
+            <div class="chart-container">
+                <canvas id="physicsChart"></canvas>
             </div>
         </section>
     </main>
+
+    <footer>
+        <p>© 2026 PhysicsLab • Desenvolvido no estilo GitHub Dark Mode</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
