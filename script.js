@@ -1,51 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btnCalcular = document.getElementById('btnCalcular');
-    
-    btnCalcular.addEventListener('click', calcular);
+document.getElementById('physicsForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Obter os valores inseridos pelo usuário
+  const mass = parseFloat(document.getElementById('mass').value);
+  const distance = parseFloat(document.getElementById('distance').value);
+  const time = parseFloat(document.getElementById('time').value);
+
+  // Validação para evitar divisão por zero
+  if (time <= 0) {
+    alert("O tempo deve ser maior que zero!");
+    return;
+  }
+
+  // 1. Deslocamento (Δs) em m
+  const displacement = distance;
+
+  // 2. Velocidade Média (v = Δs / t) em m/s
+  const velocity = distance / time;
+
+  // 3. Aceleração (a = 2 * Δs / t²), considerando v0 = 0 m/s em m/s²
+  const acceleration = (2 * distance) / Math.pow(time, 2);
+
+  // 4. Força Resultante (F = m * a) em N (Newton)
+  const force = mass * acceleration;
+
+  // Exibição formatada com 2 casas decimais no HTML
+  document.getElementById('resDisplacement').innerHTML = `${displacement.toFixed(2)} <span class="result-unit">m</span>`;
+  document.getElementById('resVelocity').innerHTML = `${velocity.toFixed(2)} <span class="result-unit">m/s</span>`;
+  document.getElementById('resAcceleration').innerHTML = `${acceleration.toFixed(2)} <span class="result-unit">m/s²</span>`;
+  document.getElementById('resForce').innerHTML = `${force.toFixed(2)} <span class="result-unit">N</span>`;
 });
-
-function calcular() {
-    const massa = parseFloat(document.getElementById('massa').value);
-    const distancia = parseFloat(document.getElementById('distancia').value);
-    const tempo = parseFloat(document.getElementById('tempo').value);
-    const errorDiv = document.getElementById('errorMessage');
-    const resultsSection = document.getElementById('resultsSection');
-
-    // Validação dos dados de entrada
-    if (isNaN(massa) || isNaN(distancia) || isNaN(tempo)) {
-        mostrarErro("Por favor, preencha todos os campos corretamente.");
-        return;
-    }
-
-    if (tempo <= 0) {
-        mostrarErro("O tempo deve ser maior que zero (t > 0).");
-        return;
-    }
-
-    // Esconde mensagens de erro anteriores
-    errorDiv.style.display = "none";
-
-    // Fórmulas mecânicas (partindo do repouso: v0 = 0)
-    // d = (1/2) * a * t^2  =>  a = (2 * d) / (t^2)
-    const aceleracao = (2 * distancia) / Math.pow(tempo, 2);
-    const forca = massa * aceleracao;
-    const energia = forca * distancia;
-    const potencia = energia / tempo;
-
-    // Atualiza a interface gráfica com os resultados
-    document.getElementById('resAceleracao').textContent = `${aceleracao.toFixed(2)} m/s²`;
-    document.getElementById('resForca').textContent = `${forca.toFixed(2)} N`;
-    document.getElementById('resEnergia').textContent = `${energia.toFixed(2)} J`;
-    document.getElementById('resPotencia').textContent = `${potencia.toFixed(2)} W`;
-
-    resultsSection.style.display = "block";
-}
-
-function mostrarErro(mensagem) {
-    const errorDiv = document.getElementById('errorMessage');
-    const resultsSection = document.getElementById('resultsSection');
-    
-    errorDiv.textContent = mensagem;
-    errorDiv.style.display = "block";
-    resultsSection.style.display = "none";
-}
