@@ -1,96 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Física Lab | Força, Energia e Potência</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>physics-lab / kinematics-calculator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="logo">
-            <svg height="32" viewBox="0 0 16 16" width="32" fill="currentColor">
-                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8z"></path>
-            </svg>
-            <span>PhysicsLab / <strong>Calculadora-Fisica</strong></span>
-        </div>
+  <div class="container">
+    <header>
+      <div class="repo-title">
+        <svg class="octicon" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+          <path fill="currentColor" d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-1 1v.69dM2.5 7.5A1.5 1.5 0 0 1 4 6h9.25a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-.75.75H4a1.5 1.5 0 0 1-1.5-1.5v-2z"></path>
+        </svg>
+        <h1>physics-lab / kinematics-calculator</h1>
+        <span class="badge">Public</span>
+      </div>
+      <p class="repo-desc">Calculadora de Cinematica e Dinâmica desenvolvida em JavaScript puro.</p>
     </header>
 
-    <main class="container">
-        <section class="hero">
-            <h1>Simulador de Força, Energia e Potência</h1>
-            <p>Insira os dados do movimento retilíneo uniformemente variado (saindo do repouso) para calcular as grandezas físicas.</p>
-        </section>
+    <div class="card">
+      <div class="card-header">
+        <span class="file-icon">📄</span> input_parameters.json
+      </div>
+      <div class="card-body">
+        <form id="physicsForm">
+          <div class="form-group">
+            <label for="mass">Massa (kg)</label>
+            <input type="number" id="mass" placeholder="Ex: 10" step="any" required>
+          </div>
 
-        <div class="content-grid">
-            <section class="card input-card">
-                <h2>Parâmetros de Entrada</h2>
-                <form id="calc-form">
-                    <div class="input-group">
-                        <label for="massa">Massa ($m$)</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="massa" step="any" placeholder="Ex: 10" required>
-                            <span class="unit">kg</span>
-                        </div>
-                    </div>
+          <div class="form-group">
+            <label for="distance">Distância (m)</label>
+            <input type="number" id="distance" placeholder="Ex: 100" step="any" required>
+          </div>
 
-                    <div class="input-group">
-                        <label for="distancia">Distância ($d$)</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="distancia" step="any" placeholder="Ex: 50" required>
-                            <span class="unit">m</span>
-                        </div>
-                    </div>
+          <div class="form-group">
+            <label for="time">Tempo (s)</label>
+            <input type="number" id="time" placeholder="Ex: 5" step="any" required>
+          </div>
 
-                    <div class="input-group">
-                        <label for="tempo">Tempo ($t$)</label>
-                        <div class="input-wrapper">
-                            <input type="number" id="tempo" step="any" placeholder="Ex: 5" required>
-                            <span class="unit">s</span>
-                        </div>
-                    </div>
+          <button type="submit" class="btn-calc">Calcular Parâmetros</button>
+        </form>
+      </div>
+    </div>
 
-                    <button type="submit" id="btn-calcular">Calcular Resultados</button>
-                </form>
-            </section>
+    <div class="card">
+      <div class="card-header">
+        <span class="file-icon">⚡</span> output_results.log
+      </div>
+      <div class="card-body">
+        <div class="grid-results">
+          
+          <div class="result-item">
+            <div class="result-label">Deslocamento (&Delta;s)</div>
+            <div class="result-value" id="resDisplacement">0 <span class="result-unit">m</span></div>
+          </div>
 
-            <section class="card results-card">
-                <h2>Resultados Obtidos</h2>
-                <div class="results-grid">
-                    <div class="res-item">
-                        <span class="res-label">Aceleração</span>
-                        <span class="res-value" id="res-acel">0.00 <small>m/s²</small></span>
-                    </div>
-                    <div class="res-item">
-                        <span class="res-label">Força Resultante</span>
-                        <span class="res-value" id="res-forca">0.00 <small>N</small></span>
-                    </div>
-                    <div class="res-item">
-                        <span class="res-label">Energia / Trabalho</span>
-                        <span class="res-value" id="res-energia">0.00 <small>J</small></span>
-                    </div>
-                    <div class="res-item">
-                        <span class="res-label">Potência Média</span>
-                        <span class="res-value" id="res-potencia">0.00 <small>W</small></span>
-                    </div>
-                </div>
-            </section>
+          <div class="result-item">
+            <div class="result-label">Velocidade Média (v)</div>
+            <div class="result-value" id="resVelocity">0 <span class="result-unit">m/s</span></div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Aceleração (a)</div>
+            <div class="result-value" id="resAcceleration">0 <span class="result-unit">m/s²</span></div>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">Força Resultante (F)</div>
+            <div class="result-value" id="resForce">0 <span class="result-unit">N</span></div>
+          </div>
+
         </div>
+      </div>
+    </div>
 
-        <section class="card chart-card">
-            <h2>Comportamento da Energia e Potência no Tempo</h2>
-            <div class="chart-container">
-                <canvas id="physicsChart"></canvas>
-            </div>
-        </section>
-    </main>
+    <div class="card">
+      <div class="card-header">
+        <span class="file-icon">📖</span> README.md
+      </div>
+      <div class="card-body console-log">
+        <p><span class="keyword"># Fórmulas Utilizadas</span></p><br>
+        <p><span class="comment">// 1. Deslocamento em linha reta</span></p>
+        <p><span class="var">&Delta;s</span> = distância</p><br>
+        
+        <p><span class="comment">// 2. Velocidade Média</span></p>
+        <p><span class="var">v</span> = &Delta;s / t</p><br>
+        
+        <p><span class="comment">// 3. Aceleração (Partindo do repouso: v0 = 0)</span></p>
+        <p><span class="var">a</span> = (2 * &Delta;s) / t²</p><br>
+        
+        <p><span class="comment">// 4. Segunda Lei de Newton (Dinâmica)</span></p>
+        <p><span class="var">F</span> = m * a</p>
+      </div>
+    </div>
+  </div>
 
-    <footer>
-        <p>© 2026 PhysicsLab • Desenvolvido no estilo GitHub Dark Mode</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
