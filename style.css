@@ -193,3 +193,79 @@ button.btn-calc:hover {
 .console-log .keyword { color: #ff7b72; font-weight: bold; }
 .console-log .var { color: #79c0ff; }
 .console-log .comment { color: #8b949e; font-style: italic; }
+/* --- FOOTER --- */
+.gh-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 40px 16px;
+    margin-top: auto;
+    background-color: var(--bg-color);
+}
+
+.gh-footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    gap: 24px;
+}
+
+.gh-footer-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+}
+
+.gh-footer-logo {
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.gh-footer-logo:hover {
+    opacity: 1;
+    color: var(--text-color);
+}
+
+.gh-credits {
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.gh-footer-nav {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gh-footer-link {
+    color: var(--link-hover);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.gh-footer-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade para telas de celulares */
+@media (max-width: 768px) {
+    .gh-footer-container {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 16px;
+    }
+    
+    .gh-footer-left {
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
