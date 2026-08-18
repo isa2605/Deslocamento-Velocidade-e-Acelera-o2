@@ -30,3 +30,18 @@ document.getElementById('physicsForm').addEventListener('submit', function(e) {
   document.getElementById('resAcceleration').innerHTML = `${acceleration.toFixed(2)} <span class="result-unit">m/s²</span>`;
   document.getElementById('resForce').innerHTML = `${force.toFixed(2)} <span class="result-unit">N</span>`;
 });
+// Efeito dinâmico opcional para destacar a sua assinatura
+document.addEventListener('DOMContentLoaded', () => {
+    const creditsSpan = document.querySelector('.gh-credits');
+
+    if (creditsSpan) {
+        creditsSpan.addEventListener('mouseenter', () => {
+            creditsSpan.style.color = 'var(--text-color)';
+            creditsSpan.style.transition = 'color 0.2s';
+        });
+
+        creditsSpan.addEventListener('mouseleave', () => {
+            creditsSpan.style.color = 'var(--text-muted)';
+        });
+    }
+});
