@@ -139,3 +139,14 @@ body {
 .blindness-overlay.active {
   display: block;
 }
+.gh-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  margin-top: 40px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.875rem;
+}
